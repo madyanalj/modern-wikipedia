@@ -1,0 +1,23 @@
+{
+  "name": "modern-wikipedia",
+  "version": "1.0.0",
+  "description": "Modern, responsive Wikipedia UI concept using Vue.js.",
+  "scripts": {
+    "dev": "nuxt",
+    "generate": "nuxt generate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maddyalj/modern-wikipedia.git"
+  },
+  "author": "Maddy Alj",
+  "license": "MIT",
+  "dependencies": {
+    "node-sass": "^4.9.0",
+    "normalize.css": "^8.0.0",
+    "nuxt": "^1.4.0",
+    "pug": "^2.0.3",
+    "pug-loader": "^2.4.0",
+    "sass-loader": "^7.0.2"
+  }
+}
