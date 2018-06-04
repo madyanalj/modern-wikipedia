@@ -13,4 +13,7 @@ module.exports = {
   css: [
     'normalize.css',
   ],
+  plugins: [
+    '~/plugins/font-awesome-icon',
+  ],
 }
