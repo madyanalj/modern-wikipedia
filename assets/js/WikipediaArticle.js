@@ -61,6 +61,6 @@ export default class WikipediaArticle {
 
     // strip out unneeded (meta) html elements
     elementsToRemove.forEach(e => e.parentElement.removeChild(e))
-    this.content = `<h1>${this.title}</h1>${doc.body.innerHTML}`
+    this.content = doc.body.innerHTML
   }
 }
