@@ -1,6 +1,6 @@
 <template lang="pug">
-  article.the-article
-    aside.the-article__menu
+  article#the-article
+    aside#the-article__menu
       nuxt-link(to='/')
         img(src='/img/logo.svg')
       div(v-show='article.headings && article.headings.length')
@@ -11,10 +11,11 @@
             ul
               li(v-for='heading in heading.children')
                 a(:href='"#" + heading.id') {{ heading.title }}
-    section.the-article__content(:contenteditable='isEditing')
-      h1 {{ article.title }}
-      div(v-html='article.content')
-    aside.the-article__infobox(v-show='article.infobox' v-html='article.infobox' :contenteditable='isEditing')
+    section#the-article__content-outer(:class='{ "is-active": isEditing }' :contenteditable='isEditing')
+        #the-article__content-inner
+          h1 {{ article.title }}
+          div(v-html='article.content')
+    aside#the-article__infobox(v-show='article.infobox' v-html='article.infobox' :contenteditable='isEditing')
 </template>
 
 <script>
@@ -60,17 +61,29 @@
   }
 </script>
 
-<style lang="sass">
-  .the-article
+<style lang="sass" scoped>
+  @import ~assets/sass/variables
+
+  #the-article
     display: flex
     flex-wrap: wrap
-
     &__menu
-      flex: 0 180px
-
-    &__content
-      flex: 1 400px
-
+      flex: 1 180px
+    &__content-outer
+      flex: 5 620px
+      position: relative
+      border: $border
+      border-top: 0
+      transition: box-shadow .2s ease-out
+      overflow-x: auto
+      outline-offset: -3px
+      &:hover, &.is-active
+        box-shadow: 0 0 50px -20px
+    &__content-inner
+      max-width: 800px
+      padding: $p-lg
+      margin: 0 auto
     &__infobox
-      flex: 0 260px
+      flex: 1 240px
+      outline-offset: -3px
 </style>
