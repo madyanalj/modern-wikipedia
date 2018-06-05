@@ -11,8 +11,9 @@ const WIKIPEDIA_API_PARAMS = {
 }
 
 export default class WikipediaArticle {
-  constructor(title) {
+  constructor(title, content = null) {
     this.title = title
+    this.content = content
   }
 
   get headings() {
@@ -40,25 +41,26 @@ export default class WikipediaArticle {
         page: this.title,
       },
     })
+    if (data.error) throw `Cannot find article ${this.title}`
     this.title = data.parse.title
     this._processHTML(data.parse.text['*'])
   }
 
   _processHTML(html) {
     const doc = new DOMParser().parseFromString(html, 'text/html')
-    const infobox = doc.getElementsByClassName('infobox')[0]
-
-    // strip out unneeded (meta) html elements
     const selectors = '.navbox, .ambox, .sistersitebox, .mw-empty-elt'
-    const elements = [...doc.querySelectorAll(selectors), infobox]
-    elements.forEach(e => e.parentElement.removeChild(e))
+    const elementsToRemove = [...doc.querySelectorAll(selectors)]
 
-    this.content = `<h1>${this.title}</h1>${doc.body.innerHTML}`
-
+    const infobox = doc.getElementsByClassName('infobox')[0]
     if (infobox) {
+      elementsToRemove.push(infobox)
       // make infobox responsive
       infobox.removeAttribute('style')
       this.infobox = infobox.outerHTML
     }
+
+    // strip out unneeded (meta) html elements
+    elementsToRemove.forEach(e => e.parentElement.removeChild(e))
+    this.content = `<h1>${this.title}</h1>${doc.body.innerHTML}`
   }
 }
