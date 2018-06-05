@@ -1,14 +1,16 @@
 <template lang="pug">
   article.the-article
     aside.the-article__menu
-      img(src='logo.svg')
-      div Contents
-      ul
-        li(v-for='heading in article.headings')
-          a(:href='"#" + heading.id') {{ heading.title }}
-          ul
-            li(v-for='heading in heading.children')
-              a(:href='"#" + heading.id') {{ heading.title }}
+      nuxt-link(to='/')
+        img(src='/logo.svg')
+      div(v-show='article.headings && article.headings.length')
+        div Contents
+        ul
+          li(v-for='heading in article.headings')
+            a(:href='"#" + heading.id') {{ heading.title }}
+            ul
+              li(v-for='heading in heading.children')
+                a(:href='"#" + heading.id') {{ heading.title }}
     section.the-article__content
       h1 {{ article.title }}
       div(v-html='article.content')
