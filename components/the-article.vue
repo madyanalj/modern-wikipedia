@@ -21,27 +21,39 @@
   import { mapState, mapMutations } from 'vuex'
   import WikipediaArticle from '~/assets/js/WikipediaArticle'
 
-  const ERROR_ARTICLE = new WikipediaArticle(
-    '404 Article Not Found',
-    '<p>Please try searching for something else.</p>',
-  )
+  const HOME_TITLE = 'Wikipedia, the free encyclopedia'
   const HOME_ARTICLE = new WikipediaArticle(
     'Welcome to Wikipedia!',
     '<p>Welcome to Wikipedia!</p>',
   )
+  const ERROR_ARTICLE = new WikipediaArticle(
+    '404 Article Not Found',
+    '<p>Please try searching for something else.</p>',
+  )
 
   export default {
+    data: () => ({
+      pageTitle: HOME_TITLE,
+    }),
     computed: mapState(['article']),
+    head() {
+      return {
+        title: this.pageTitle,
+      }
+    },
     async created() {
       if (process.server) return
       const { articleTitle } = this.$route.params
+      let pageTitle = HOME_TITLE
       let wikipediaArticle = HOME_ARTICLE
       if (articleTitle) {
         wikipediaArticle = new WikipediaArticle(articleTitle)
         await wikipediaArticle.fetch().catch(() => {
           wikipediaArticle = ERROR_ARTICLE
         })
+        pageTitle = `${wikipediaArticle.title} - Wikipedia`
       }
+      this.pageTitle = pageTitle
       this.setArticle(wikipediaArticle)
     },
     methods: mapMutations(['setArticle']),
