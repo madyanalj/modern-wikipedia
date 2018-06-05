@@ -2,7 +2,7 @@
   article.the-article
     aside.the-article__menu
       nuxt-link(to='/')
-        img(src='/logo.svg')
+        img(src='/img/logo.svg')
       div(v-show='article.headings && article.headings.length')
         div Contents
         ul
