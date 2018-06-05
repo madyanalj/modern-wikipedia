@@ -14,7 +14,7 @@
     section.the-article__content
       h1 {{ article.title }}
       div(v-html='article.content')
-    aside.the-article__infobox(v-html='article.infobox')
+    aside.the-article__infobox(v-show='article.infobox' v-html='article.infobox')
 </template>
 
 <script>
