@@ -1,16 +1,16 @@
 <template lang="pug">
-  .the-header
-    .the-header__item
+  header
+    .the-header__group
       button
-        font-awesome-icon(:icon='["fas", "bars"]')
-      form.the-header__search-form(v-on:submit.prevent='submitSearch')
+        font-awesome-icon(icon='bars' size='lg')
+      form(v-on:submit.prevent='submitSearch')
         input(v-model='search')
         button
-          font-awesome-icon(:icon='["fas", "search"]')
-    .the-header__item
-      button(@click='setEditingMode')
-        font-awesome-icon(:icon='["fas", "edit"]')
-      button(@click='setReadingMode')
+          font-awesome-icon(icon='search')
+    .the-header__group
+      button(@click='setEditingMode' :class='{ "is-active": isEditing }')
+        font-awesome-icon(icon='edit')
+      button(@click='setReadingMode' :class='{ "is-active": !isEditing }')
         font-awesome-icon(:icon='["far", "file"]')
 </template>
 
@@ -33,12 +33,48 @@
   }
 </script>
 
-<style lang="sass">
-  .the-header
+<style lang="sass" scoped>
+  @import ~assets/sass/variables
+
+  header
     display: flex
     flex-wrap: wrap
     justify-content: space-between
+    align-content: stretch
+    background: linear-gradient(to bottom right, $c-blue, $c-blue-grey)
+    color: $c-white
 
-    &__search-form
-      display: inline-flex
+  .the-header__group, form
+    display: inline-flex
+
+  button, input
+    background: 0
+    border: 0
+    outline: 0
+    color: unset
+    opacity: .6
+    &:hover, &:focus
+      opacity: 1
+
+  button
+    padding: 0 .8em
+    position: relative
+    &.is-active
+      opacity: 1
+      &:after
+        content: ''
+        display: block
+        border-right: .4em solid transparent
+        border-left: .4em solid transparent
+        border-bottom: .4em solid $c-white
+        position: absolute
+        bottom: 0px
+
+  input
+    font-size: .8em
+    border-bottom: $border
+    margin: 1em 0
+    padding-bottom: .4em
+    &:focus
+      opacity: 1
 </style>
