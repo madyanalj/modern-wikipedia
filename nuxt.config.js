@@ -20,6 +20,9 @@ module.exports = {
     'normalize.css',
     '~/assets/sass/base.sass',
   ],
+  loading: {
+    color: '#000',
+  },
   plugins: [
     '~/plugins/font-awesome-icon',
   ],
