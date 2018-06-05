@@ -8,18 +8,23 @@
         button
           font-awesome-icon(:icon='["fas", "search"]')
     .the-header__item
-      button
+      button(@click='setEditingMode')
         font-awesome-icon(:icon='["fas", "edit"]')
-      button
+      button(@click='setReadingMode')
         font-awesome-icon(:icon='["far", "file"]')
 </template>
 
 <script>
+  import { mapState, mapMutations } from 'vuex'
+
   export default {
     data: () => ({
       search: null,
     }),
+    computed: mapState(['isEditing']),
     methods: {
+      ...mapMutations(['setEditingMode']),
+      ...mapMutations(['setReadingMode']),
       submitSearch() {
         if (!this.search) return
         this.$router.replace({ path: this.search })

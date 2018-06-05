@@ -11,10 +11,10 @@
             ul
               li(v-for='heading in heading.children')
                 a(:href='"#" + heading.id') {{ heading.title }}
-    section.the-article__content
+    section.the-article__content(:contenteditable='isEditing')
       h1 {{ article.title }}
       div(v-html='article.content')
-    aside.the-article__infobox(v-show='article.infobox' v-html='article.infobox')
+    aside.the-article__infobox(v-show='article.infobox' v-html='article.infobox' :contenteditable='isEditing')
 </template>
 
 <script>
@@ -35,7 +35,7 @@
     data: () => ({
       pageTitle: HOME_TITLE,
     }),
-    computed: mapState(['article']),
+    computed: mapState(['article', 'isEditing']),
     head() {
       return {
         title: this.pageTitle,
