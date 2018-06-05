@@ -1,0 +1,121 @@
+@import variables
+
+//--- Common Styles ---//
+
+*, *:before, *:after
+  box-sizing: border-box
+
+::selection
+  background-color: $c-grey
+  color: $c-black
+
+body
+  font-size: 16px
+  line-height: 1.7
+  font-family: $f-sans-serif
+
+h1, h2, h3
+  font-family: $f-serif
+  font-weight: normal
+  margin-top: 1.2em
+
+h1
+  font-size: 3em
+
+h2
+  font-size: 2em
+  margin-top: 2.4em
+  &:before
+    content: ''
+    margin-top: -1em
+    border-top: $border
+    width: 100%
+    position: absolute
+    left: 0
+
+a
+  color: $c-blue-green
+  text-decoration: none
+  &:hover
+    text-decoration: underline
+
+button
+  cursor: pointer
+
+img
+  max-width: 100%
+  height: auto
+
+ul
+  list-style-type: none
+  padding: 0
+  margin: 0
+
+table
+  display: block
+  overflow-x: auto
+  border-collapse: collapse
+
+th, td
+  border: $border
+  padding: $p-xs
+
+th
+  background-color: $c-blue-light
+
+//--- Wikipedia Classes ---//
+
+// column on the right
+.infobox
+  display: table
+  width: 100%
+  font-size: .8em
+  border-bottom: $border
+  th
+    text-align: left
+  td
+    background-color: $c-blue-light
+  th, td
+    border-right: none
+    border-left: none
+  table
+    display: table
+    th, td
+      border: none
+      padding: 3px 1em
+  // parent rows
+  .mergedtoprow
+    th, td
+      border-bottom: none
+  // children rows
+  .mergedrow
+    th, td
+      border: none
+
+// notes in the begining of sections
+.hatnote
+  padding: $p-sm
+  display: inline-block
+  background-color: $c-grey-lighter
+  color: $c-blue-grey
+  margin-bottom: 1em
+  border-radius: 2em
+
+// floated boxes in article
+.tleft, .floatleft
+  float: left
+  clear: left
+  margin: 0 1.2em 1.2em
+.tright, .floatright
+  float: right
+  clear: right
+  margin: 0 1.2em 1.2em
+.tleft
+  margin-left: -1 * $p-w-lg
+.tright
+  margin-right: -1 * $p-w-lg
+
+// captions of floated boxes
+.thumbcaption
+  font-size: .8em
+  padding-right: .5em

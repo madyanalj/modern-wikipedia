@@ -10,8 +10,15 @@ module.exports = {
       },
     ],
   },
+  link: [
+    {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css?family=Lora',
+    },
+  ],
   css: [
     'normalize.css',
+    '~/assets/sass/base.sass',
   ],
   plugins: [
     '~/plugins/font-awesome-icon',
