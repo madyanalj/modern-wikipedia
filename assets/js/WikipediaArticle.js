@@ -51,6 +51,16 @@ export default class WikipediaArticle {
     const selectors = '.navbox, .ambox, .sistersitebox, .mw-empty-elt'
     const elementsToRemove = [...doc.querySelectorAll(selectors)]
 
+    // route wiki links to app instead of wikipedia url
+    doc.querySelectorAll('a[href^="/wiki"]').forEach(a => {
+      const href = a.getAttribute('href')
+      let correctHref = '#'
+      if (href.indexOf('/wiki/File:') === -1) {
+        correctHref = href.substr(5)
+      }
+      a.setAttribute('href', correctHref)
+    })
+
     const infobox = doc.getElementsByClassName('infobox')[0]
     if (infobox) {
       elementsToRemove.push(infobox)
