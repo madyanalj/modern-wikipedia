@@ -26,4 +26,10 @@ module.exports = {
   plugins: [
     '~/plugins/font-awesome-icon',
   ],
+  generate: {
+    fallback: true,
+    routes: [
+      '/',
+    ],
+  },
 }
