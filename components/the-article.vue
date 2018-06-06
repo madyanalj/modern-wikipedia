@@ -1,6 +1,6 @@
 <template lang="pug">
   article#the-article
-    aside#the-article__menu
+    aside#the-article__menu(v-show='showMenu')
       nuxt-link(to='/')
         img(src='/img/logo.svg')
       div(v-show='article.headings && article.headings.length')
@@ -39,7 +39,7 @@
     data: () => ({
       pageTitle: HOME_TITLE,
     }),
-    computed: mapState(['article', 'isEditing']),
+    computed: mapState(['article', 'showMenu', 'isEditing']),
     head() {
       return {
         title: this.pageTitle,

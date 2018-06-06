@@ -1,7 +1,7 @@
 <template lang="pug">
   header
     .the-header__group
-      button
+      button(@click='toggleShowMenu')
         font-awesome-icon(icon='bars' size='lg')
       form(v-on:submit.prevent='submitSearch')
         input(v-model='search')
@@ -23,7 +23,7 @@
     }),
     computed: mapState(['isEditing']),
     methods: {
-      ...mapMutations(['setEditingMode', 'setReadingMode']),
+      ...mapMutations(['toggleShowMenu', 'setEditingMode', 'setReadingMode']),
       submitSearch() {
         if (!this.search) return
         this.$router.replace({ path: this.search })
