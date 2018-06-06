@@ -20,9 +20,7 @@ module.exports = {
     'normalize.css',
     '~/assets/sass/base.sass',
   ],
-  loading: {
-    color: '#000',
-  },
+  loading: '~/components/the-loader.vue',
   plugins: [
     '~/plugins/font-awesome-icon',
   ],
