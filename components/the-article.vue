@@ -11,7 +11,10 @@
             ul
               li(v-for='heading in heading.children')
                 a(:href='"#" + heading.id') {{ heading.title }}
-    section#the-article__content-outer(:class='{ "is-active": isEditing }' :contenteditable='isEditing')
+    section#the-article__content-outer(
+      ref='theArticle__ContentOuter'
+      :contenteditable='isEditing'
+    )
         #the-article__content-inner
           h1 {{ article.title }}
           div(v-html='article.content')
@@ -42,22 +45,36 @@
         title: this.pageTitle,
       }
     },
-    async created() {
-      if (process.server) return
-      const { articleTitle } = this.$route.params
-      let pageTitle = HOME_TITLE
-      let wikipediaArticle = HOME_ARTICLE
-      if (articleTitle) {
-        wikipediaArticle = new WikipediaArticle(articleTitle)
-        await wikipediaArticle.fetch().catch(() => {
-          wikipediaArticle = ERROR_ARTICLE
-        })
-        pageTitle = `${wikipediaArticle.title} - Wikipedia`
-      }
-      this.pageTitle = pageTitle
-      this.setArticle(wikipediaArticle)
+    watch: {
+      isEditing(val) {
+        if (!val) return
+        this.$nextTick(this.focusOnArticleEditor)
+      },
     },
-    methods: mapMutations(['setArticle']),
+    created() {
+      if (process.server) return
+      this.setReadingMode()
+      this.setArticleAndPageTitle(this.$route.params.articleTitle)
+    },
+    methods: {
+      ...mapMutations(['setArticle', 'setReadingMode']),
+      async setArticleAndPageTitle(articleTitle) {
+        let pageTitle = HOME_TITLE
+        let wikipediaArticle = HOME_ARTICLE
+        if (articleTitle) {
+          wikipediaArticle = new WikipediaArticle(articleTitle)
+          await wikipediaArticle.fetch().catch(() => {
+            wikipediaArticle = ERROR_ARTICLE
+          })
+          pageTitle = `${wikipediaArticle.title} - Wikipedia`
+        }
+        this.pageTitle = pageTitle
+        this.setArticle(wikipediaArticle)
+      },
+      focusOnArticleEditor() {
+        this.$refs.theArticle__ContentOuter.focus()
+      },
+    },
   }
 </script>
 
@@ -77,7 +94,7 @@
       transition: box-shadow .2s ease-out
       overflow-x: auto
       outline-offset: -3px
-      &:hover, &.is-active
+      &:hover
         box-shadow: 0 0 50px -20px
     &__content-inner
       max-width: 800px

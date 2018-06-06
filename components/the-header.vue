@@ -23,8 +23,7 @@
     }),
     computed: mapState(['isEditing']),
     methods: {
-      ...mapMutations(['setEditingMode']),
-      ...mapMutations(['setReadingMode']),
+      ...mapMutations(['setEditingMode', 'setReadingMode']),
       submitSearch() {
         if (!this.search) return
         this.$router.replace({ path: this.search })
