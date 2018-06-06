@@ -1,24 +1,27 @@
 <template lang="pug">
-  article#the-article
-    aside#the-article__menu(v-show='showMenu')
-      nuxt-link(to='/')
-        img(src='/img/logo.svg')
-      div(v-show='article.headings && article.headings.length')
-        div Contents
-        ul
-          li(v-for='heading in article.headings')
-            a(:href='"#" + heading.id') {{ heading.title }}
-            ul
-              li(v-for='heading in heading.children')
-                a(:href='"#" + heading.id') {{ heading.title }}
-    section#the-article__content-outer(
-      ref='theArticle__ContentOuter'
-      :contenteditable='isEditing'
-    )
-        #the-article__content-inner
-          h1 {{ article.title }}
-          div(v-html='article.content')
-    aside#the-article__infobox(v-show='article.infobox' v-html='article.infobox' :contenteditable='isEditing')
+  div
+    .loader(v-show='isLoading')
+      font-awesome-icon(icon='sun' size='7x' spin)
+    article#the-article(v-show='!isLoading')
+      aside#the-article__menu(v-show='showMenu')
+        nuxt-link(to='/')
+          img(src='/img/logo.svg')
+        div(v-show='article.headings && article.headings.length')
+          div Contents
+          ul
+            li(v-for='heading in article.headings')
+              a(:href='"#" + heading.id') {{ heading.title }}
+              ul
+                li(v-for='heading in heading.children')
+                  a(:href='"#" + heading.id') {{ heading.title }}
+      section#the-article__content-outer(
+        ref='theArticle__ContentOuter'
+        :contenteditable='isEditing'
+      )
+          #the-article__content-inner
+            h1 {{ article.title }}
+            div(v-html='article.content')
+      aside#the-article__infobox(v-show='article.infobox' v-html='article.infobox' :contenteditable='isEditing')
 </template>
 
 <script>
@@ -43,11 +46,10 @@
       isHome: (vm) => vm.routeArticleTitle == null,
       defaultPageTitle: (vm) => `${vm.foundArticleTitle} - Wikipedia`,
       pageTitle: (vm) => !vm || vm.isHome ? HOME_TITLE : vm.defaultPageTitle,
+      isLoading: (vm) => !vm || vm.$nuxt.$loading.show,
     },
     head() {
-      return {
-        title: this.pageTitle,
-      }
+      return { title: this.pageTitle }
     },
     watch: {
       isEditing(val) {
@@ -80,6 +82,11 @@
 
 <style lang="sass" scoped>
   @import ~assets/sass/variables
+
+  .loader
+    color: $c-grey
+    padding: 5em 1em 1em
+    text-align: center
 
   #the-article
     display: flex
