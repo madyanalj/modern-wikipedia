@@ -87,22 +87,24 @@
     display: flex
     flex-wrap: wrap
     &__menu
-      flex: 1 220px
+      flex: 1 12em
     &__content-outer
-      flex: 5 620px
+      flex: 5 30em
       position: relative
-      border: $border
-      border-top: 0
+      border-left: $border
+      border-right: $border
       transition: box-shadow .2s ease-out
       overflow-x: auto
       outline-offset: -3px
       &:hover
         box-shadow: 0 0 50px -20px
     &__content-inner
-      max-width: 800px
+      max-width: 50em
       padding: $p-lg
       margin: 0 auto
+      @media screen and (max-width: 1220px)
+        padding: $p-sm
     &__infobox
-      flex: 1 240px
+      flex: 1 12em
       outline-offset: -3px
 </style>

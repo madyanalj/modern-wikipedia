@@ -13,18 +13,25 @@ body
   font-size: 16px
   line-height: 1.7
   font-family: $f-sans-serif
+  @media screen and (max-width: 860px)
+    font-size: 14px
 
 h1, h2, h3
   font-family: $f-serif
   font-weight: normal
   margin-top: 1.2em
+  line-height: 1.3
 
 h1
   font-size: 3em
+  @media screen and (max-width: 860px)
+    font-size: 2em
 
 h2
   font-size: 2em
   margin-top: 2.4em
+  @media screen and (max-width: 860px)
+    font-size: 1.5em
   &:before
     content: ''
     margin-top: -1em
@@ -114,8 +121,12 @@ th
   margin: 0 1.2em 1.2em
 .tleft
   margin-left: -.95 * $p-w-lg
+  @media screen and (max-width: 1220px)
+    margin-left: -.95 * $p-w-sm
 .tright
   margin-right: -.95 * $p-w-lg
+  @media screen and (max-width: 1220px)
+    margin-right: -.95 * $p-w-sm
 
 // captions of floated boxes
 .thumbcaption
