@@ -4,16 +4,7 @@
       font-awesome-icon(icon='sun' size='7x' spin)
     article#the-article(v-show='!isLoading')
       aside#the-article__menu(v-show='showMenu')
-        nuxt-link(to='/')
-          img(src='/img/logo.svg')
-        div(v-show='article.headings && article.headings.length')
-          div Contents
-          ul
-            li(v-for='heading in article.headings')
-              a(:href='"#" + heading.id') {{ heading.title }}
-              ul
-                li(v-for='heading in heading.children')
-                  a(:href='"#" + heading.id') {{ heading.title }}
+        the-article-menu
       section#the-article__content-outer(
         ref='theArticle__ContentOuter'
         :contenteditable='isEditing'
@@ -26,6 +17,7 @@
 
 <script>
   import { mapState, mapMutations } from 'vuex'
+  import TheArticleMenu from '~/components/the-article-menu.vue'
   import WikipediaArticle from '~/assets/js/WikipediaArticle'
 
   const HOME_TITLE = 'Wikipedia, the free encyclopedia'
@@ -39,6 +31,9 @@
   )
 
   export default {
+    components: {
+      TheArticleMenu,
+    },
     computed: {
       ...mapState(['article', 'showMenu', 'isEditing']),
       routeArticleTitle: (vm) => vm.$route.params.articleTitle,
@@ -92,7 +87,7 @@
     display: flex
     flex-wrap: wrap
     &__menu
-      flex: 1 180px
+      flex: 1 220px
     &__content-outer
       flex: 5 620px
       position: relative
