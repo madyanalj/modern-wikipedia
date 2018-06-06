@@ -19,15 +19,29 @@
   import { mapState, mapMutations } from 'vuex'
   import TheArticleMenu from '~/components/the-article-menu.vue'
   import WikipediaArticle from '~/assets/js/WikipediaArticle'
+  import suggestedArticles from '~/assets/json/suggested-articles'
+
+  function generateHomeContent(list) {
+    const introduction = '<p>Use the search box at the top left corner or click one of the links below to read Wikipedia articles wrapped in this modern, responsive design.</p>'
+    const formatHref = (article) => article.replace(/\s/g, '_')
+    const formatArticle =
+      (article) => `<li><a href='${formatHref(article)}'>${article}</a></li>`
+    const formatArticles =
+      (articles) => `<ul>${articles.map(formatArticle).join('')}</ul>`
+    const formatCategory =
+      (item) => `<h2>${item.category}</h2>${formatArticles(item.articles)}`
+    const formatList = (list) => list.map(formatCategory).join('')
+    return introduction + formatList(list)
+  }
 
   const HOME_TITLE = 'Wikipedia, the free encyclopedia'
   const HOME_ARTICLE = new WikipediaArticle(
-    'Welcome to Wikipedia!',
-    '<p>Welcome to Wikipedia!</p>',
+    'Welcome to Modern Wiki!',
+    generateHomeContent(suggestedArticles),
   )
   const ERROR_ARTICLE = new WikipediaArticle(
-    '404 Article Not Found',
-    '<p>Please try searching for something else.</p>',
+    '404 Article Not Found :(',
+    '<p>Try searching for something else.</p>',
   )
 
   export default {

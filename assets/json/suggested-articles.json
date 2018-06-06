@@ -1,0 +1,28 @@
+[
+  {
+    "category": "World Cities",
+    "articles": [
+      "Martinique",
+      "São Paulo",
+      "Barcelona",
+      "Beirut",
+      "Zagreb"
+    ]
+  },
+  {
+    "category": "TV Shows",
+    "articles": [
+      "Sense8",
+      "Friends",
+      "How I Met Your Mother"
+    ]
+  },
+  {
+    "category": "Technology Companies",
+    "articles": [
+      "Apple Inc.",
+      "Google",
+      "Microsoft"
+    ]
+  }
+]
