@@ -44,6 +44,7 @@ export default class WikipediaArticle {
     if (data.error) throw `Cannot find article ${this.title}`
     this.title = data.parse.title
     this._processHTML(data.parse.text['*'])
+    return this
   }
 
   _processHTML(html) {

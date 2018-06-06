@@ -36,10 +36,14 @@
   )
 
   export default {
-    data: () => ({
-      pageTitle: HOME_TITLE,
-    }),
-    computed: mapState(['article', 'showMenu', 'isEditing']),
+    computed: {
+      ...mapState(['article', 'showMenu', 'isEditing']),
+      routeArticleTitle: (vm) => vm.$route.params.articleTitle,
+      foundArticleTitle: (vm) => vm.article ? vm.article.title : '',
+      isHome: (vm) => vm.routeArticleTitle == null,
+      defaultPageTitle: (vm) => `${vm.foundArticleTitle} - Wikipedia`,
+      pageTitle: (vm) => !vm || vm.isHome ? HOME_TITLE : vm.defaultPageTitle,
+    },
     head() {
       return {
         title: this.pageTitle,
@@ -51,25 +55,21 @@
         this.$nextTick(this.focusOnArticleEditor)
       },
     },
-    created() {
-      if (process.server) return
-      this.setReadingMode()
-      this.setArticleAndPageTitle(this.$route.params.articleTitle)
+    beforeMount() {
+      this.$nextTick(this.init)
     },
     methods: {
       ...mapMutations(['setArticle', 'setReadingMode']),
-      async setArticleAndPageTitle(articleTitle) {
-        let pageTitle = HOME_TITLE
-        let wikipediaArticle = HOME_ARTICLE
-        if (articleTitle) {
-          wikipediaArticle = new WikipediaArticle(articleTitle)
-          await wikipediaArticle.fetch().catch(() => {
-            wikipediaArticle = ERROR_ARTICLE
-          })
-          pageTitle = `${wikipediaArticle.title} - Wikipedia`
-        }
-        this.pageTitle = pageTitle
-        this.setArticle(wikipediaArticle)
+      async init() {
+        this.$nuxt.$loading.start()
+        this.setReadingMode()
+        this.setArticle(await this.fetchArticle())
+        this.$nuxt.$loading.finish()
+      },
+      async fetchArticle() {
+        if (this.isHome) return HOME_ARTICLE
+        const article = new WikipediaArticle(this.routeArticleTitle)
+        return await article.fetch().catch(() => ERROR_ARTICLE)
       },
       focusOnArticleEditor() {
         this.$refs.theArticle__ContentOuter.focus()
