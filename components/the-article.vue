@@ -104,6 +104,10 @@
       margin: 0 auto
       @media screen and (max-width: 1220px)
         padding: $p-sm
+      /deep/ ul
+        list-style-type: disc
+        padding-left: 2.5em
+        margin: 1em 0
     &__infobox
       flex: 1 12em
       outline-offset: -3px
