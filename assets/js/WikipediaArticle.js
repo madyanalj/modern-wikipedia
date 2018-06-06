@@ -28,7 +28,9 @@ export default class WikipediaArticle {
       if (e.nodeName === 'H2') {
         headings.push(heading)
       } else {
-        headings[headings.length - 1].children.push(heading)
+        const parent = headings[headings.length - 1]
+        if (parent) parent.children.push(heading)
+        else headings.push(heading)
       }
     })
     return headings
