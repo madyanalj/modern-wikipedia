@@ -10,6 +10,7 @@ Name | Type
 -- | --
 Vue.js | JavaScript front-end framework
 Nuxt.js | Vue.js development framework
+Vuex | Vue.js state management
 Sass | CSS preprocessor
 Pug | HTML preprocessor
 Webpack | Module bundler
